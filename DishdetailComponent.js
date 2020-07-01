@@ -4,12 +4,15 @@ import {
     CardTitle, Breadcrumb, BreadcrumbItem
 } from 'reactstrap';
 import { Link } from 'react-router-dom';
+import Comment from './CommentForm';
+
 
 
 function RenderComments({ comments }) {
 
     const result = comments.map(comment => {
         return (
+            <div className="comments-container" key={comment.id}>
             <li key={comment.id}>
                 <p>{comment.comment}</p>
                 <p>-- {comment.author},
@@ -18,6 +21,8 @@ function RenderComments({ comments }) {
                         .format(new Date(Date.parse(comment.date)))}
                 </p>
             </li>
+            </div>
+            
         )
     })
     return (
@@ -26,7 +31,7 @@ function RenderComments({ comments }) {
             <ul className='list-unstyled'>
                 {result}
             </ul>
-
+            <Comment />
         </div>
     )
 }
@@ -58,7 +63,7 @@ const Dishdetail = (props) => {
         const commentItem = dish && <RenderComments comments={props.comments} />
         //console.log(dishItem)
         return (
-            <div className="container">
+            <div className="container" key={props.dish.id}>
                 <div className="row">
                     <Breadcrumb>
 
