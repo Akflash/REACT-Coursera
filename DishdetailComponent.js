@@ -8,7 +8,7 @@ import Comment from './CommentForm';
 
 
 
-function RenderComments({ comments }) {
+function RenderComments({ comments, addComment, dishId }) {
 
     const result = comments.map(comment => {
         return (
@@ -31,7 +31,7 @@ function RenderComments({ comments }) {
             <ul className='list-unstyled'>
                 {result}
             </ul>
-            <Comment />
+            <Comment dishId={dishId} addComment={addComment}/>
         </div>
     )
 }
@@ -60,7 +60,9 @@ const Dishdetail = (props) => {
 
         // console.log(dish.name)
         const dishItem = dish && <RenderDish dish={dish} />
-        const commentItem = dish && <RenderComments comments={props.comments} />
+        const commentItem = dish && <RenderComments comments={props.comments}
+        addComment={props.addComment}
+        dishId={props.dish.id} />
         //console.log(dishItem)
         return (
             <div className="container" key={props.dish.id}>

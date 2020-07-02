@@ -18,8 +18,7 @@ class Comment extends React.Component {
     }
     handleSubmit(values) {
 
-        console.log('Current State is: ' + JSON.stringify(values));
-        alert('Current State is: ' + JSON.stringify(values));
+        this.props.addComment(this.props.dishId, values.rating, values.author, values.comment);
         // event.preventDefault();
     }
 
@@ -62,8 +61,8 @@ class Comment extends React.Component {
                             </Row>
                             <Row className="form-group" md={2}>
                                 <Col md={10}>
-                                    <Label htmlFor="name">Your Name</Label>
-                                    <Control.text model=".name" id="name" name="name"
+                                    <Label htmlFor="author">Your Name</Label>
+                                    <Control.text model=".author" id="author" name="author"
                                         placeholder="Your Name"
                                         className="form-control"
                                         validators={{
