@@ -4,7 +4,7 @@ import { Loading } from './LoadingComponent';
 import { baseUrl } from './baseUrl';
 
 function RenderCard({ item, isLoading, errMess }) {
-
+  
   if (isLoading) {
     return (
       <Loading />
@@ -17,7 +17,9 @@ function RenderCard({ item, isLoading, errMess }) {
   }
   else
     return (
+      
       <Card>
+        {console.log(item.image)}
        < CardImg src={baseUrl + item.image} alt={item.name} />
         <CardBody>
           <CardTitle>{item.name}</CardTitle>
@@ -25,6 +27,7 @@ function RenderCard({ item, isLoading, errMess }) {
           <CardText>{item.description}</CardText>
         </CardBody>
       </Card>
+      
     );
 
 }

@@ -10,7 +10,7 @@ import { baseUrl } from './baseUrl';
 
 
 
-function RenderComments({ comments, addComment, dishId }) {
+function RenderComments({ comments, postComment, dishId }) {
 
     const result = comments.map(comment => {
         return (
@@ -33,7 +33,7 @@ function RenderComments({ comments, addComment, dishId }) {
             <ul className='list-unstyled'>
                 {result}
             </ul>
-            <Comment dishId={dishId} addComment={addComment}/>
+            <Comment dishId={dishId} postComment={postComment}/>
         </div>
     )
 }
@@ -81,7 +81,7 @@ const Dishdetail = (props) => {
         // console.log(dish.name)
         const dishItem = dish && <RenderDish dish={dish} />
         const commentItem = dish && <RenderComments comments={props.comments}
-        addComment={props.addComment}
+        postComment={props.postComment}
         dishId={props.dish.id} />
         //console.log(dishItem)
         return (
