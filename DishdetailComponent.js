@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import Comment from './CommentForm';
 import { Loading } from './LoadingComponent';
 import { baseUrl } from './baseUrl';
+import { FadeTransform, Fade, Stagger } from 'react-animation-components';
 
 
 
@@ -14,26 +15,33 @@ function RenderComments({ comments, postComment, dishId }) {
 
     const result = comments.map(comment => {
         return (
-            <div className="comments-container" key={comment.id}>
-            <li key={comment.id}>
-                <p>{comment.comment}</p>
-                <p>-- {comment.author},
+            <Stagger in>
+                <div className="comments-container" key={comment.id}>
+                    <Fade in>
+                        <li key={comment.id}>
+                            <p>{comment.comment}</p>
+                            <p>-- {comment.author},
                     &nbsp;
                     {new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit' })
-                        .format(new Date(Date.parse(comment.date)))}
-                </p>
-            </li>
-            </div>
-            
+                                    .format(new Date(Date.parse(comment.date)))}
+                            </p>
+                        </li>
+                    </Fade>
+                </div>
+            </Stagger>
+
         )
     })
     return (
         <div className='col-12 col-md-5 m-1'>
             <h4> Comments </h4>
             <ul className='list-unstyled'>
+
                 {result}
+
+
             </ul>
-            <Comment dishId={dishId} postComment={postComment}/>
+            <Comment dishId={dishId} postComment={postComment} />
         </div>
     )
 }
@@ -41,15 +49,17 @@ function RenderComments({ comments, postComment, dishId }) {
 function RenderDish({ dish }) {
     console.log(dish.image)
     return (
-       
+
         <div className='col-12 col-md-5 m-1'>
-            <Card>
-                <CardImg width="100%" src={baseUrl+`/${dish.image}`}alt={dish.name} />
-                <CardBody>
-                    <CardTitle>{dish.name}</CardTitle>
-                    <CardText>{dish.description}</CardText>
-                </CardBody>
-            </Card>
+            <FadeTransform in transformProps={{ exitTransform: 'scale(0.5) translateY(-50%)' }}>
+                <Card>
+                    <CardImg top src={baseUrl + dish.image} alt={dish.name} />
+                    <CardBody>
+                        <CardTitle>{dish.name}</CardTitle>
+                        <CardText>{dish.description}</CardText>
+                    </CardBody>
+                </Card>
+            </FadeTransform>
         </div>
     )
 
@@ -59,18 +69,18 @@ const Dishdetail = (props) => {
 
     const dish = props.dish
     if (props.isLoading) {
-        return(
+        return (
             <div className="container">
-                <div className="row">            
+                <div className="row">
                     <Loading />
                 </div>
             </div>
         );
     }
     else if (props.errMess) {
-        return(
+        return (
             <div className="container">
-                <div className="row">            
+                <div className="row">
                     <h4>{props.errMess}</h4>
                 </div>
             </div>
@@ -81,8 +91,8 @@ const Dishdetail = (props) => {
         // console.log(dish.name)
         const dishItem = dish && <RenderDish dish={dish} />
         const commentItem = dish && <RenderComments comments={props.comments}
-        postComment={props.postComment}
-        dishId={props.dish.id} />
+            postComment={props.postComment}
+            dishId={props.dish.id} />
         //console.log(dishItem)
         return (
             <div className="container" key={props.dish.id}>
