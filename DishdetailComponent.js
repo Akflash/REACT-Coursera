@@ -10,40 +10,37 @@ import { baseUrl } from './baseUrl';
 import { FadeTransform, Fade, Stagger } from 'react-animation-components';
 
 
-
 function RenderComments({ comments, postComment, dishId }) {
 
-    const result = comments.map(comment => {
+    
+    if (comments != null)
         return (
-            <Stagger in>
-                <div className="comments-container" key={comment.id}>
-                    <Fade in>
-                        <li key={comment.id}>
-                            <p>{comment.comment}</p>
-                            <p>-- {comment.author},
+            <div className='col-12 col-md-5 m-1'>
+                <h4> Comments </h4>
+                <ul className='list-unstyled'>
+                    <Stagger in>
+                        {comments.map(comment => {
+                            return (
+
+                                <div className="comments-container" key={comment.id}>
+                                    <Fade in>
+                                        <li key={comment.id}>
+                                            <p>{comment.comment}</p>
+                                            <p>-- {comment.author},
                     &nbsp;
                     {new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit' })
-                                    .format(new Date(Date.parse(comment.date)))}
-                            </p>
-                        </li>
-                    </Fade>
-                </div>
-            </Stagger>
-
+                                                    .format(new Date(Date.parse(comment.date)))}
+                                            </p>
+                                        </li>
+                                    </Fade>
+                                </div>
+                            )
+                        })}
+                    </Stagger>
+                </ul>
+                <Comment dishId={dishId} postComment={postComment} />
+            </div>
         )
-    })
-    return (
-        <div className='col-12 col-md-5 m-1'>
-            <h4> Comments </h4>
-            <ul className='list-unstyled'>
-
-                {result}
-
-
-            </ul>
-            <Comment dishId={dishId} postComment={postComment} />
-        </div>
-    )
 }
 
 function RenderDish({ dish }) {
